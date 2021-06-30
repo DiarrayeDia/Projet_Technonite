@@ -33,4 +33,17 @@ class ArtistesController extends AbstractController
             'artistes' => $artistes,
         ]);
     }
+
+    /**
+     * @Route("/artistes/view", name="artistes_view")
+     */
+    public function view(ArtistRepository $artistrepository): Response
+    {
+        $artistes = $artistrepository->findAll();
+
+
+        return $this->render('artistes/view.html.twig', [
+            'artistes' => $artistes,
+        ]);
+    }
 }
