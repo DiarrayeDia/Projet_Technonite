@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Artist;
 use App\Repository\ArtistRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,15 +36,15 @@ class ArtistesController extends AbstractController
     }
 
     /**
-     * @Route("/artistes/view", name="artistes_view")
+     * @Route("/artiste/view/{id}", name="artiste_view", requirements={"id"="\d+"})
      */
-    public function view(ArtistRepository $artistrepository): Response
+    public function view(Artist $artiste, ArtistRepository $artisteRepository): Response
     {
-        $artistes = $artistrepository->findAll();
-
+        $artisteId = $artiste->getId();
+        $artiste = $artisteRepository->find($artisteId);
 
         return $this->render('artistes/view.html.twig', [
-            'artistes' => $artistes,
+            'artiste' => $artiste,
         ]);
     }
 }
