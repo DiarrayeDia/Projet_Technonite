@@ -19,7 +19,7 @@
 					<a class="nav-link" href="{{ path("artistes")}}">Artistes</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Billeterie</a>
+					<a class="nav-link" href="{{ path("reservation")}}">Billeterie</a>
 				</li>
 				{% if not is_granted("ROLE_USER") %}
 
