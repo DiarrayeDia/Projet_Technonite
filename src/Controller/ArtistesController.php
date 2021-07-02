@@ -13,11 +13,13 @@ class ArtistesController extends AbstractController
 {
     /**
      * @Route("/artistes", name="artistes")
+     * @Route("/artistes/category/{id}", name="liste_categoryById", requirements={"id"="\d+"})
      */
-    public function index(CategoryRepository $categoryrepository, ArtistRepository $artistrepository): Response
+    public function index(CategoryRepository $categorieRepository, ArtistRepository $artistRepository, $id = null): Response
     {
-        $categories = $categoryrepository->findAll();
-        $artistes = $artistrepository->findAll();
+        $categories = $categorieRepository->findAll();
+
+        $artistes = $id ? $artistRepository->findBy(['category' => $id]) :  $artistRepository->findAll();
         $categoryColorName = [
             'Mélodique' => 'primary',
             'Industrielle' => 'secondary',
@@ -29,19 +31,20 @@ class ArtistesController extends AbstractController
             $category->color = $categoryColorName[$category->getName()];
         }
 
-        return $this->render('artistes/artistes.html.twig', [
+        // dd($categories);
+        return $this->render('artistes/index.html.twig', [
             'categories' => $categories,
             'artistes' => $artistes,
         ]);
     }
 
     /**
-     * @Route("/artiste/view/{id}", name="artiste_view", requirements={"id"="\d+"})
+     * @Route("/artistes/view/{id}", name="artiste_view", requirements={"id"="\d+"})
      */
-    public function view(Artist $artiste, ArtistRepository $artisteRepository): Response
+    public function view(Artist $artist, ArtistRepository $artistRepository): Response
     {
-        $artisteId = $artiste->getId();
-        $artiste = $artisteRepository->find($artisteId);
+        $artistId = $artist->getId();
+        $artiste = $artistRepository->find($artistId);
 
         return $this->render('artistes/view.html.twig', [
             'artiste' => $artiste,
