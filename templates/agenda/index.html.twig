@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agenda du festival
+{% endblock %}
+
+{% block body %}
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Date</th>
+				<th scope="col">Créneau horaire</th>
+				<th scope="col">Artistes</th>
+				<th scope="col">Réserver</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in artistes %}
+
+				<tr>
+					<th>2{{i.concert ?'0' : '1'}}/08/2021</th>
+					<td>{{i.concert ?'16h-18h' : '20h-22'}}</td>
+					<td>DJ
+						{{i.name}}
+					</td>
+					<td class="btn btn-primary btn-sm">Réserver une place</td>
+				</tr>
+			{% endfor %}
+
+
+		</tbody>
+	</table>
+{% endblock %}
